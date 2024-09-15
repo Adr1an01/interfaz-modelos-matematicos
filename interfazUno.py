@@ -12,19 +12,19 @@ from Matematicas import solve
 class InterfazUno:
     def __init__(self, parent):
         self.parent = parent
-        # Crear el frame principal
+
         self.main_frame = tk.Frame(self.parent)
         self.main_frame.pack(fill="both", expand=True)
-        # Crear el primer panel (izquierda) con un tamaño fijo y su contenido
+        
         self.panel1 = tk.Frame(self.main_frame, bg="#D3D3D3", width=300)
         self.panel1.pack(side="left", fill="y")
         self.combo_box = ttk.Combobox(self.panel1, values=["Modelo riñon artificial", "Opción 2", "Opción 3"], state="readonly")
         self.combo_box.pack(padx=10, pady=10, fill="x")
-        # Crear un frame para widgets dinámicos
+        
         self.dynamic_frame = tk.Frame(self.panel1, bg="#D3D3D3")
         self.dynamic_frame.pack(padx=10, pady=10, fill="both", expand=True)
         self.combo_box.bind("<<ComboboxSelected>>", self.update_label)
-        # Crear el segundo panel (derecha) que se expande y su contenido
+        
         self.panel2 = tk.Frame(self.main_frame)
         self.panel2.pack(side="right", fill="both", expand=True)
         self.notebook = ttk.Notebook(self.panel2)
@@ -35,7 +35,7 @@ class InterfazUno:
         self.notebook.add(self.tab2, text="Diagrama de fase")
         self.notebook.add(self.tab3, text="Análisis Numérico")
         self.notebook.pack(expand=True, fill="both")
-        # Crear el Treeview en la pestaña 3
+        
         self.treeview = ttk.Treeview(self.tab3, show='headings')
         self.treeview.pack(expand=True, fill="both")
     def plot_graph(self, t, x_exacta, y_exacta, x_rk4, y_rk4):
@@ -80,15 +80,14 @@ class InterfazUno:
         canvas.get_tk_widget().pack(expand=True, fill='both', padx=10, pady=10)
 
     def clear_tabs(self):
-        # Limpiar la pestaña 1 (Gráfica en el tiempo)
         for widget in self.tab1.winfo_children():
             widget.destroy()
         
-        # Limpiar la pestaña 2 (Diagrama de fase)
+        
         for widget in self.tab2.winfo_children():
             widget.destroy()
         
-        # Limpiar la pestaña 3 (Análisis Numérico)
+        
         self.treeview.delete(*self.treeview.get_children())
 
     def update_label(self, event):
@@ -178,16 +177,16 @@ class InterfazUno:
             messagebox.showerror("Error", "Por favor, ingrese números válidos en todos los campos.")
 
     def update_treeview(self, df):
-        # Limpiar Treeview
+        
         self.treeview.delete(*self.treeview.get_children())
         
-        # Configurar columnas y cabeceras
+        
         self.treeview["columns"] = list(df.columns)
         for col in df.columns:
             self.treeview.heading(col, text=col)
             self.treeview.column(col, width=100, anchor="center")
         
-        # Insertar datos en Treeview
+        
         for _, row in df.iterrows():
             rounded_values = [f"{value:.4f}" if isinstance(value, float) else value for value in row]
             self.treeview.insert("", "end", values=rounded_values)
