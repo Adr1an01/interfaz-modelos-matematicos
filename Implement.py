@@ -29,10 +29,3 @@ class ImplementacionModelos(ModelosMatematicos):
         dy_dt = a / V *(x - y)
         return np.array([dx_dt, dy_dt])
     
-    
-#a = 0.5  # Ejemplo de valor para la constante de eficacia
-#v = 1.0  # Ejemplo de valor para la tasa de flujo volumétrico de la sangre
-#V = 0.8
-#r_ = np.array([1.0, 0.5]) 
-#res = ImplementacionModelos.modelo_riñon_artificial(r_, a, v, V)
-#print(res)
